@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screen Imports
 import { HomeScreen } from './screens/HomeScreen';
+import { PhotoSubmissionScreen } from './screens/PhotoSubmissionScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,13 @@ export default function App() {
           component={HomeScreen}
           options={{
             headerShown: false
+          }}
+        />
+        <Stack.Screen
+          name='PhotoSubmission'
+          component={PhotoSubmissionScreen}
+          options={{
+            title: 'Submit Photo'
           }}
         />
       </Stack.Navigator>
