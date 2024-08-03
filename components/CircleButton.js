@@ -6,6 +6,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import { theme } from '../utilities/theme';
 
 export default function CircleButton({ onPress }) {
+    // TODO: Add logic to animate button on tap.
+
     return (
         <View style={styles.circleButtonContainer}>
             <Pressable style={styles.circleButton} onPress={onPress}>

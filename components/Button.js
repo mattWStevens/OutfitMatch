@@ -10,6 +10,8 @@ export default function Button({
     labelStyles,
     onPress
 }) {
+    // TODO: Add logic to animate button on tap.
+
     return (
         <View style={[styles.buttonContainer, { ...buttonStyles }]}>
             <Pressable style={styles.button} onPress={onPress}>
