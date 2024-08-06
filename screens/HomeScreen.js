@@ -1,7 +1,13 @@
 // Library Imports
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, SafeAreaView, View } from 'react-native';
+import {
+    StyleSheet,
+    Text,
+    SafeAreaView,
+    View
+} from 'react-native';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
+import * as ImagePicker from 'expo-image-picker';
 
 // Utility Imports
 import { theme } from '../utilities/theme';
@@ -10,13 +16,39 @@ import { theme } from '../utilities/theme';
 import CircleButton from '../components/CircleButton';
 
 export const HomeScreen = ({ navigation }) => {
+    const takePicture = async () => {
+        const { status } = await ImagePicker.requestCameraPermissionsAsync();
+
+        if (status === 'granted') {
+            try {
+                const result = await ImagePicker.launchCameraAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
+                    quality: 1,
+                    aspect: [4, 3],
+                });
+                if (!result.cancelled) {
+                    navigation.navigate('PhotoSubmission', {
+                        imageURI: result.assets[0].uri
+                    });
+                }
+            } catch (error) {
+                console.log("Error occurred while launching the camera: ", error);
+            }
+        } else {
+            alert('failed');
+        }
+    };
 
     return (
         <SafeAreaView style={styles.container}>
             <Text style={styles.appTitle}>OutfitMatch</Text>
-            <FontAwesome5 name='tshirt' size={200} color={theme.colors.primaryBrand} />
+            <FontAwesome5
+                name='tshirt'
+                size={200}
+                color={theme.colors.primaryBrand}
+            />
             <View style={styles.buttonContainer}>
-                <CircleButton onPress={() => alert('Clicked!')} />
+                <CircleButton onPress={takePicture} />
             </View>
             <StatusBar style='auto' />
         </SafeAreaView>
