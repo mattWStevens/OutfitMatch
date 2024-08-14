@@ -1,12 +1,13 @@
 // API Imports
 import { OPENAI_GET_COLOR_BASE_PROMPT } from './Prompts';
 
-const getPrimaryColorFromImage = async (clothingType, image) => {
+// Utility Imports
+import { encodeBase64 } from '../utilities/functions';
+
+const getPrimaryColorFromImage = async (clothingType, imageFilePath) => {
     const getColorPrompt = [...OPENAI_GET_COLOR_BASE_PROMPT];
 
-    // NOTE IMAGE WILL NEED TO BE BASE64 ENCODED
-    // USE readFile(FILE_PATH, 'base64') which returns a promise.
-    // https://github.com/joltup/rn-fetch-blob/wiki/File-System-Access-API#readfilepath-encodingpromise
+    const base64Image = await encodeBase64(imageFilePath);
 
     getColorPrompt.push({
         'role': 'user',
@@ -15,7 +16,7 @@ const getPrimaryColorFromImage = async (clothingType, image) => {
             {
                 'type': 'image_url',
                 'image_url': {
-                    'url': `data:image/jpeg;base64,${image}`,   // PUT BASE64 ENCODED HERE.
+                    'url': `data:image/jpeg;base64,${base64Image}`,
                 },
             }
         ]
@@ -29,7 +30,7 @@ const getPrimaryColorFromImage = async (clothingType, image) => {
     return hexColorCode;
 };
 
-export const getColorMatches = async (clothingType, image) => {
-    const primaryColor = await getPrimaryColorFromImage(clothingType, image);
-    console.log('primary color', primaryColor)
+export const getColorMatches = async (clothingType, imageFilePath) => {
+    const primaryColorResponse = await getPrimaryColorFromImage(clothingType, imageFilePath);
+    const primaryColorHexCode = primaryColorResponse.choices[0].message.content;
 };

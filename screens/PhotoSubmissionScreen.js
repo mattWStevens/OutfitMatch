@@ -16,6 +16,9 @@ import { theme } from '../utilities/theme';
 // Component Imports
 import Button from '../components/Button';
 
+// API Imports
+import { getColorMatches } from '../api/MatchColorsApi';
+
 export const PhotoSubmissionScreen = ({ route, navigation }) => {
     const [imageURI, setImageURI] = useState({ uri: route.params.imageURI });
     const [open, setOpen] = useState(false);
@@ -44,7 +47,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
 
     const onSelectClothingType = (type) => setClothingType(type);
     const onSubmitInfo = () => {
-        // TODO: Implement Function Logic
+        getColorMatches(clothingType, imageURI.uri);
     };
 
     return (
