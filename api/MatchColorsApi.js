@@ -27,12 +27,12 @@ const getColorInfoFromAI = async (clothingType, imageFilePath) => {
         ]
     });
 
-    const hexColorCode = await openai.chat.completions.create({
+    const colorInfo = await openai.chat.completions.create({
         messages: getColorPrompt,
         model: 'gpt-4o-mini',
     });
 
-    return hexColorCode;
+    return colorInfo;
 };
 
 export const getColorMatches = async (clothingType, imageFilePath) => {

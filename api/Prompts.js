@@ -13,6 +13,8 @@ You will respond with a JSON object like the following:
 
 { primaryColor: '#ffff', neutralMatch: { color: '#000', explanation: 'Black always is a safe choice to go with white.'}, conservativeMatch: { color: '#7d7d7d', explanation: 'Grey is a very safe choice.'}, boldMatch: { color: '#ee1dcb', explanation: 'For more flare magenta can make the colors pop.' }}
 
+DO NOT WRAP THE JSON CODES IN JSON MARKERS.
+
 Example:
 
 User: What is the color of these pants? What colors would go good with them?
