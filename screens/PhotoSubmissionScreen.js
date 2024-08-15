@@ -31,7 +31,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
         { label: 'Shorts', value: 'shorts' },
         { label: 'Socks', value: 'socks' },
         { label: 'Under Garments', value: 'under garments' },
-        { label: 'Jacket', value: 'jackeet' },
+        { label: 'Jacket', value: 'jacket' },
         { label: 'Sweater', value: 'sweater' },
         { label: 'Vest', value: 'vest' },
         { label: 'Dress', value: 'dress' },
@@ -46,8 +46,9 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
     ]);
 
     const onSelectClothingType = (type) => setClothingType(type);
-    const onSubmitInfo = () => {
-        getColorMatches(clothingType, imageURI.uri);
+    const onSubmitInfo = async () => {
+        const color = await getColorMatches(clothingType, imageURI.uri);
+        console.log('color', color)
     };
 
     return (
