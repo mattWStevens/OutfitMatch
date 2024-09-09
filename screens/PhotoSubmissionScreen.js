@@ -16,6 +16,9 @@ import { theme } from '../utilities/theme';
 // Component Imports
 import Button from '../components/Button';
 
+// API Imports
+import { getColorMatches } from '../api/MatchColorsApi';
+
 export const PhotoSubmissionScreen = ({ route, navigation }) => {
     const [imageURI, setImageURI] = useState({ uri: route.params.imageURI });
     const [open, setOpen] = useState(false);
@@ -28,7 +31,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
         { label: 'Shorts', value: 'shorts' },
         { label: 'Socks', value: 'socks' },
         { label: 'Under Garments', value: 'under garments' },
-        { label: 'Jacket', value: 'jackeet' },
+        { label: 'Jacket', value: 'jacket' },
         { label: 'Sweater', value: 'sweater' },
         { label: 'Vest', value: 'vest' },
         { label: 'Dress', value: 'dress' },
@@ -43,8 +46,9 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
     ]);
 
     const onSelectClothingType = (type) => setClothingType(type);
-    const onSubmitInfo = () => {
-        // TODO: Implement Function Logic
+    const onSubmitInfo = async () => {
+        const color = await getColorMatches(clothingType, imageURI.uri);
+        console.log('color', color)
     };
 
     return (
@@ -71,6 +75,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         label='Submit'
+                        disabled={!clothingType}
                         onPress={onSubmitInfo}
                         labelStyles={{
                             fontWeight: 'bold'

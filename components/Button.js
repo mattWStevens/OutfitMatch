@@ -1,5 +1,5 @@
 // Library Imports
-import { StyleSheet, Pressable, Text } from 'react-native';
+import { StyleSheet, Pressable, Text, View } from 'react-native';
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated,
 {
@@ -17,6 +17,7 @@ export default function Button({
     label,
     buttonStyles,
     labelStyles,
+    disabled,
     onPress
 }) {
     const opacity = useSharedValue(1);
@@ -44,27 +45,46 @@ export default function Button({
     });
 
     return (
-        <GestureDetector gesture={tap}>
-            <Animated.View
-                style={[
-                    styles.buttonContainer,
-                    animatedOpacityStyle,
-                    { ...buttonStyles }
-                ]}>
-                <Pressable
-                    style={styles.button}
-                    onPress={onPress}
-                >
-                    <Text
+        <>
+            {!disabled &&
+                <GestureDetector gesture={tap}>
+                    <Animated.View
                         style={[
-                            styles.buttonLabel,
-                            { ...labelStyles }
+                            styles.buttonContainer,
+                            animatedOpacityStyle,
+                            { ...buttonStyles }
                         ]}>
-                        {label}
-                    </Text>
-                </Pressable>
-            </Animated.View>
-        </GestureDetector>
+                        <Pressable
+                            style={styles.button}
+                            onPress={onPress}
+                        >
+                            <Text
+                                style={[
+                                    styles.buttonLabel,
+                                    { ...labelStyles }
+                                ]}>
+                                {label}
+                            </Text>
+                        </Pressable>
+                    </Animated.View>
+                </GestureDetector>}
+            {disabled &&
+                <View style={[styles.buttonContainer, { backgroundColor: theme.colors.disabledButton, opacity: .3 }]}>
+                    <Pressable
+                        disabled={true}
+                        style={styles.button}
+                        onPress={onPress}
+                    >
+                        <Text
+                            style={[
+                                styles.buttonLabel,
+                                { ...labelStyles }
+                            ]}>
+                            {label}
+                        </Text>
+                    </Pressable>
+                </View>}
+        </>
     );
 }
 
