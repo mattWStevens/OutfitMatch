@@ -7,6 +7,7 @@ import OpenAI from 'openai';
 // Screen Imports
 import { HomeScreen } from './screens/HomeScreen';
 import { PhotoSubmissionScreen } from './screens/PhotoSubmissionScreen';
+import { ResultsScreen } from './screens/ResultsScreen';
 
 // API Imports
 import Config from './api/Config';
@@ -31,6 +32,13 @@ export default function App() {
             component={PhotoSubmissionScreen}
             options={{
               title: 'Submit Photo'
+            }}
+          />
+          <Stack.Screen
+            name='Results'
+            component={ResultsScreen}
+            options={{
+              title: 'Results'
             }}
           />
         </Stack.Navigator>

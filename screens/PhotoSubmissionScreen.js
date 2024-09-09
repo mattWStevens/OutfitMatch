@@ -52,6 +52,9 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
         setLoading(true);
         const color = await getColorMatches(clothingType, imageURI.uri);
         setLoading(false);
+        navigation.navigate('Results', {
+            apiResponse: color
+        });
         console.log('color', color)
     };
 
