@@ -75,6 +75,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         label='Submit'
+                        disabled={!clothingType}
                         onPress={onSubmitInfo}
                         labelStyles={{
                             fontWeight: 'bold'

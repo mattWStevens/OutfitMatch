@@ -13,6 +13,7 @@ export const theme = {
         primaryBrand: '#454ade',
         darkBrand: '#b14aed',
         mediumBrand: '#c874d9',
-        lightBrand: '#e1bbc9'
+        lightBrand: '#e1bbc9',
+        disabledButton: '#595959'
     }
 };
