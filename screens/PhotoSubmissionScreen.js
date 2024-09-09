@@ -5,7 +5,8 @@ import {
     SafeAreaView,
     Image,
     View,
-    Text
+    Text,
+    ActivityIndicator
 } from 'react-native';
 import { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
@@ -21,6 +22,7 @@ import { getColorMatches } from '../api/MatchColorsApi';
 
 export const PhotoSubmissionScreen = ({ route, navigation }) => {
     const [imageURI, setImageURI] = useState({ uri: route.params.imageURI });
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [clothingType, setClothingType] = useState('');
@@ -47,7 +49,9 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
 
     const onSelectClothingType = (type) => setClothingType(type);
     const onSubmitInfo = async () => {
+        setLoading(true);
         const color = await getColorMatches(clothingType, imageURI.uri);
+        setLoading(false);
         console.log('color', color)
     };
 
@@ -75,13 +79,17 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         label='Submit'
-                        disabled={!clothingType}
+                        disabled={!clothingType || loading}
                         onPress={onSubmitInfo}
                         labelStyles={{
                             fontWeight: 'bold'
                         }}
                     />
                 </View>
+                {loading &&
+                    <View>
+                        <ActivityIndicator style={{ marginTop: 25 }} />
+                    </View>}
             </View>
 
             <StatusBar style='auto' />
