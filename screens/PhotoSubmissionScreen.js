@@ -13,6 +13,7 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 // Utility Imports
 import { theme } from '../utilities/theme';
+import { formatJSONString } from '../utilities/functions';
 
 // Component Imports
 import Button from '../components/Button';
@@ -53,9 +54,8 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
         const color = await getColorMatches(clothingType, imageURI.uri);
         setLoading(false);
         navigation.navigate('Results', {
-            apiResponse: color
+            apiResponse: formatJSONString(color)
         });
-        console.log('color', color)
     };
 
     return (

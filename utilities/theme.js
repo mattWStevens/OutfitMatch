@@ -4,8 +4,14 @@ export const theme = {
             primaryTitle: 'Helvetica Neue'
         },
         fontSize: {
-            title: 64
+            title: 64,
+            subtitle: 24
         }
+    },
+    borders: {
+        defaultBorderColor: '#000',
+        defaultBorderWidth: '1px',
+        defaultBorderStyle: 'solid'
     },
     colors: {
         primaryText: '#fff',
