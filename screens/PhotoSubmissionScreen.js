@@ -5,13 +5,15 @@ import {
     SafeAreaView,
     Image,
     View,
-    Text
+    Text,
+    ActivityIndicator
 } from 'react-native';
 import { useState } from 'react';
 import DropDownPicker from 'react-native-dropdown-picker';
 
 // Utility Imports
 import { theme } from '../utilities/theme';
+import { formatJSONString } from '../utilities/functions';
 
 // Component Imports
 import Button from '../components/Button';
@@ -21,6 +23,7 @@ import { getColorMatches } from '../api/MatchColorsApi';
 
 export const PhotoSubmissionScreen = ({ route, navigation }) => {
     const [imageURI, setImageURI] = useState({ uri: route.params.imageURI });
+    const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [clothingType, setClothingType] = useState('');
@@ -47,8 +50,12 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
 
     const onSelectClothingType = (type) => setClothingType(type);
     const onSubmitInfo = async () => {
+        setLoading(true);
         const color = await getColorMatches(clothingType, imageURI.uri);
-        console.log('color', color)
+        setLoading(false);
+        navigation.navigate('Results', {
+            apiResponse: formatJSONString(color)
+        });
     };
 
     return (
@@ -75,13 +82,26 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                 <View style={styles.buttonContainer}>
                     <Button
                         label='Submit'
-                        disabled={!clothingType}
+                        disabled={!clothingType || loading}
                         onPress={onSubmitInfo}
                         labelStyles={{
                             fontWeight: 'bold'
                         }}
                     />
                 </View>
+                {loading &&
+                    <View style={styles.loadingContainer}>
+                        <ActivityIndicator style={{ marginTop: 25 }} />
+                        <View>
+                            <Text
+                                style={{
+                                    color: theme.colors.primaryText,
+                                    fontSize: theme.font.fontSize.caption
+                                }}>
+                                Submitting Photo...
+                            </Text>
+                        </View>
+                    </View>}
             </View>
 
             <StatusBar style='auto' />
@@ -96,6 +116,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-evenly'
+    },
+    loadingContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 16
     },
     buttonContainer: {
         marginLeft: 75,
