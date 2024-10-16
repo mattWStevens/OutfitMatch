@@ -5,7 +5,8 @@ export const theme = {
         },
         fontSize: {
             title: 64,
-            subtitle: 24
+            subtitle: 24,
+            caption: 16
         }
     },
     borders: {

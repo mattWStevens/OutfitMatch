@@ -90,8 +90,17 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                     />
                 </View>
                 {loading &&
-                    <View>
+                    <View style={styles.loadingContainer}>
                         <ActivityIndicator style={{ marginTop: 25 }} />
+                        <View>
+                            <Text
+                                style={{
+                                    color: theme.colors.primaryText,
+                                    fontSize: theme.font.fontSize.caption
+                                }}>
+                                Submitting Photo...
+                            </Text>
+                        </View>
                     </View>}
             </View>
 
@@ -107,6 +116,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         flexDirection: 'column',
         justifyContent: 'space-evenly'
+    },
+    loadingContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 16
     },
     buttonContainer: {
         marginLeft: 75,
