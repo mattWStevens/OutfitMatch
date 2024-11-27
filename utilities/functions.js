@@ -35,8 +35,8 @@ export const getColorMatchInfoByIndex = (index, apiResponse) => {
 
 export const formatJSONString = (inputString) => {
     try {
-        // Replace single quotes with double quotes
-        let formatted = inputString.replace(/'/g, '"');
+        // Replace single quotes with double quotes only for keys and values
+        let formatted = inputString.replace(/'([^']*?)'/g, '"$1"');
 
         // Add double quotes around unquoted keys
         formatted = formatted.replace(/([{,]\s*)(\w+)(\s*:)/g, '$1"$2"$3');
@@ -46,6 +46,6 @@ export const formatJSONString = (inputString) => {
 
         return formatted;
     } catch (error) {
-        return 'Invalid JSON format';
+        return `Invalid JSON format: ${error.message}`;
     }
 };

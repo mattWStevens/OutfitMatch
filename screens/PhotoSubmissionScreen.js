@@ -64,7 +64,7 @@ export const PhotoSubmissionScreen = ({ route, navigation }) => {
                 <Image source={imageURI} style={styles.image} />
             </View>
 
-            <View>
+            <View style={{ marginTop: 25 }}>
                 <View style={styles.dropdownContainer}>
                     <Text style={styles.dropdownLabel}>Clothing Type:</Text>
 
@@ -114,8 +114,7 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: theme.colors.primaryBackground,
         alignItems: 'center',
-        flexDirection: 'column',
-        justifyContent: 'space-evenly'
+        flexDirection: 'column'
     },
     loadingContainer: {
         display: 'flex',
@@ -135,7 +134,8 @@ const styles = StyleSheet.create({
     },
     imageContainer: {
         borderWidth: 5,
-        borderColor: theme.colors.lightBrand
+        borderColor: theme.colors.lightBrand,
+        marginTop: 25
     },
     dropdownContainer: {
         padding: 25

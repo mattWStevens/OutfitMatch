@@ -6,7 +6,11 @@ import { encodeBase64 } from '../utilities/functions';
 
 const generatePhotoPrompt = (clothingType) => {
     const isPlural = clothingType.endsWith('s');
-    return `This is a photo of${isPlural ? ' ' : ' a '}${clothingType}. What color ${isPlural ? 'are' : 'is'} the ${clothingType}? What colors would go good with ${isPlural ? 'them' : 'it'}?`;
+    const article = isPlural ? ' ' : ' a ';
+    const verb = isPlural ? 'are' : 'is';
+    const pronoun = isPlural ? 'them' : 'it';
+
+    return `This is a photo of${article}${clothingType}. What color ${verb} the ${clothingType}? What colors would go good with ${pronoun}?`;
 };
 
 const getColorInfoFromAI = async (clothingType, imageFilePath) => {
@@ -30,14 +34,26 @@ const getColorInfoFromAI = async (clothingType, imageFilePath) => {
     const colorInfo = await openai.chat.completions.create({
         messages: getColorPrompt,
         model: 'gpt-4o-mini',
+        max_tokens: 500,
+        temperature: 0.7
     });
 
     return colorInfo;
 };
 
 export const getColorMatches = async (clothingType, imageFilePath) => {
-    const colorInfoResponse = await getColorInfoFromAI(clothingType, imageFilePath);
-    const colorInfo = colorInfoResponse.choices[0].message.content;
+    try {
+        const response = await getColorInfoFromAI(clothingType, imageFilePath);
 
-    return colorInfo;
+        if (!response.choices || !response.choices[0]?.message?.content) {
+            throw new Error('Invalid API response format');
+        }
+
+        // Return the raw content string instead of parsing it
+        return response.choices[0].message.content;
+
+    } catch (error) {
+        console.error('Error getting color matches:', error);
+        throw new Error('Failed to get color matches. Please try again.');
+    }
 };
